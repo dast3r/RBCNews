@@ -1,6 +1,7 @@
 package ru.vorobjev.rbcnews.activities;
 
 import ru.vorobjev.rbknews.R;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -8,12 +9,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 
 public class PreferencesActivity extends PreferenceActivity {
-	
-		// API < 11 :(
-//		@Override
-//		public void onBuildHeaders(List<Header> target) {
-//			loadHeadersFromResource(R.xml.preference_headers, target);
-//		}
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -31,5 +26,8 @@ public class PreferencesActivity extends PreferenceActivity {
 					return true;
 				}
 			});
+            
+            ActionBar actionBar = getActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

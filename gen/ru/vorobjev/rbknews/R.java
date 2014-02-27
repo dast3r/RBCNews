@@ -178,13 +178,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int action_settings=0x7f050017;
         public static final int both=0x7f050003;
-        public static final int date=0x7f05000d;
+        public static final int date=0x7f05000e;
         public static final int disabled=0x7f050000;
         public static final int fl_inner=0x7f050012;
         public static final int flip=0x7f050008;
         public static final int gridview=0x7f050009;
         public static final int home_btn_messages=0x7f050010;
         public static final int home_btn_new_message=0x7f05000f;
+        public static final int imgLogo=0x7f05000c;
         public static final int list=0x7f050011;
         public static final int manualOnly=0x7f050004;
         public static final int pullDownFromTop=0x7f050005;
@@ -197,21 +198,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pull_to_refresh_text=0x7f050015;
         public static final int rotate=0x7f050007;
         public static final int scrollview=0x7f05000b;
-        public static final int splashscreen=0x7f05000e;
-        public static final int title=0x7f05000c;
+        public static final int title=0x7f05000d;
         public static final int webview=0x7f05000a;
     }
     public static final class layout {
-        public static final int content=0x7f030000;
-        public static final int item=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int news=0x7f030003;
-        public static final int preference_headers=0x7f030004;
-        public static final int preferences=0x7f030005;
-        public static final int pull_to_refresh_header_horizontal=0x7f030006;
-        public static final int pull_to_refresh_header_vertical=0x7f030007;
-        public static final int update=0x7f030008;
-        public static final int view=0x7f030009;
+        public static final int activity_splash=0x7f030000;
+        public static final int content=0x7f030001;
+        public static final int item=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int news=0x7f030004;
+        public static final int preference_headers=0x7f030005;
+        public static final int preferences=0x7f030006;
+        public static final int pull_to_refresh_header_horizontal=0x7f030007;
+        public static final int pull_to_refresh_header_vertical=0x7f030008;
+        public static final int update=0x7f030009;
+        public static final int view=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -224,6 +225,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int category=0x7f07000c;
         public static final int category_summary=0x7f07000e;
         public static final int hello_world=0x7f070008;
+        public static final int img_logo=0x7f070013;
         public static final int interval=0x7f07000b;
         public static final int interval_summary=0x7f07000d;
         public static final int prefs_categories=0x7f07000f;
@@ -239,6 +241,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pull_to_refresh_pull_label=0x7f070000;
         public static final int pull_to_refresh_refreshing_label=0x7f070002;
         public static final int pull_to_refresh_release_label=0x7f070001;
+        public static final int test_text=0x7f070014;
     }
     public static final class style {
         /** 

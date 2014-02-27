@@ -1,9 +1,11 @@
 package ru.vorobjev.rbcnews.activities;
 
+
 import ru.vorobjev.rbcnews.constants.C;
 import ru.vorobjev.rbcnews.db.DatabaseHandler;
 import ru.vorobjev.rbcnews.servicies.UpdateNewsService;
 import ru.vorobjev.rbknews.R;
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,17 +38,53 @@ public class NewsActivity extends FragmentActivity implements
 	BroadcastReceiver br;
 	Cursor cursor;
 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.news);
+		
+		setupActionBar();
 
-		db = new DatabaseHandler(this);
-		db.open();
+		initDB();
 
-		cursor = db.getAllData(C.RSS_ITEMS_TABLE);
+		initCursor();
 
+		initList();
+
+		initBroadcastReceiver();
+
+		getSupportLoaderManager().initLoader(0, null, this);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(br);
+		super.onDestroy();
+	}
+	
+	
+
+	private void initBroadcastReceiver() {
+		br = new BroadcastReceiver() {
+			public void onReceive(Context context, Intent intent) {
+				lvData.onRefreshComplete();
+				initCursor();
+				scAdapter.changeCursor(cursor);
+				int status = intent.getIntExtra(C.PARAM_STATUS, 0);
+				if (status == C.STATUS_BAD) {
+					String exception = intent.getStringExtra(C.PARAM_EXCEPTION);
+					Toast.makeText(NewsActivity.this, exception, Toast.LENGTH_LONG).show();
+				}
+			}
+		};
+		IntentFilter intentFilter = new IntentFilter(REFRESH_COMPLETE);
+		registerReceiver(br, intentFilter);
+	}
+
+	private void initList() {
 		String[] from = new String[] { C.RSS_ITEMS_TABLE_TITLE, C.RSS_ITEMS_TABLE_PUBDATE };
 		int[] to = new int[] { R.id.title, R.id.date };
 
@@ -74,29 +112,20 @@ public class NewsActivity extends FragmentActivity implements
 				}
 			}
 		});
+	}
 
-		br = new BroadcastReceiver() {
-			public void onReceive(Context context, Intent intent) {
-				lvData.onRefreshComplete();
-				cursor = db.getAllData(C.RSS_ITEMS_TABLE);
-				scAdapter.changeCursor(cursor);
-				int status = intent.getIntExtra(C.PARAM_STATUS, 0);
-				if (status == C.STATUS_BAD) {
-					String exception = intent.getStringExtra(C.PARAM_EXCEPTION);
-					Toast.makeText(NewsActivity.this, exception, Toast.LENGTH_LONG).show();
-				}
-			}
-		};
-		IntentFilter intentFilter = new IntentFilter(REFRESH_COMPLETE);
-		registerReceiver(br, intentFilter);
+	private void initCursor() {
+		cursor = db.getAllData(C.RSS_ITEMS_TABLE);
+	}
 
-		getSupportLoaderManager().initLoader(0, null, this);
+	private void initDB() {
+		db = new DatabaseHandler(this);
+		db.open();
 	}
 	
-	@Override
-	protected void onDestroy() {
-		unregisterReceiver(br);
-		super.onDestroy();
+	private void setupActionBar() {
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

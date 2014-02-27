@@ -1,12 +1,9 @@
 package ru.vorobjev.rbcnews.activities;
 
-import java.lang.ref.WeakReference;
-
 import ru.vorobjev.rbcnews.db.DatabaseHandler;
 import ru.vorobjev.rbcnews.servicies.UpdateNewsService;
 import ru.vorobjev.rbcnews.utils.PreferencesHelper;
 import ru.vorobjev.rbknews.R;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -15,21 +12,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.ImageView;
 
-public class WebsterActivity extends Activity {
+public class WebsterActivity extends FragmentActivity {
 	
 	public static final String UPDATE_INTERVAL = "ru.vorobjev.rbcnews.WebsterActivity.UPDATE_INTERVAL";
 	
-	private static final int STOPSPLASH = 0;
-	private static final long SPLASHTIME = 2000;
 	private static final int DEFAULT_INTERVAL = 10;
 	
-	private ImageView splash;
-	private Handler splashHandler;
 	private AlarmManager alarmManager;
 	private BroadcastReceiver br;
 
@@ -40,16 +31,15 @@ public class WebsterActivity extends Activity {
 		super.onCreate(bundle);
 		setContentView(R.layout.main);
 		
-		showSplash();
 		startDB();
 		initializeAlarmManager();
 		initializeBroadcastReceiver();
+		startRefreshingService();
 	}
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
-		startRefreshingService();
 	}
 	
 	@Override
@@ -79,14 +69,6 @@ public class WebsterActivity extends Activity {
 		db.open();
 	}
 
-	private void showSplash() {
-		splash = (ImageView) findViewById(R.id.splashscreen);
-		splashHandler = new SplashHandler(splash);
-		Message msg = new Message();
-		msg.what = STOPSPLASH;
-		splashHandler.sendMessageDelayed(msg, SPLASHTIME);
-	}
-	
 	private void startRefreshingService() {
 		Intent intent = new Intent(this, UpdateNewsService.class);
 		PendingIntent pending = PendingIntent.getService(this, 0, intent, 0);
@@ -110,24 +92,4 @@ public class WebsterActivity extends Activity {
 		startActivity(settingsActivity);
 	}
 
-	private static class SplashHandler extends Handler {
-
-		WeakReference<ImageView> splash;
-
-		public SplashHandler(ImageView activity) {
-			splash = new WeakReference<ImageView>(activity);
-		}
-
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case STOPSPLASH:
-				ImageView splashView = splash.get();
-				if (splashView != null) {
-					splashView.setVisibility(View.GONE);
-				}
-				break;
-			}
-		}
-	}
 }

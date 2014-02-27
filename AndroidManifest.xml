@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="15"
         android:targetSdkVersion="19" />
 
     <application
@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="ru.vorobjev.rbcnews.activities.WebsterActivity"
+            android:name="ru.vorobjev.rbcnews.activities.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="ru.vorobjev.rbcnews.activities.WebsterActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name=".WebsterActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="ru.vorobjev.rbcnews.activities.ViewActivity"
+            android:parentActivityName="ru.vorobjev.rbcnews.activities.WebsterActivity"
             android:label="Просмотр" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -37,6 +47,7 @@
         </activity>
         <activity
             android:name="ru.vorobjev.rbcnews.activities.NewsActivity"
+            android:parentActivityName="ru.vorobjev.rbcnews.activities.WebsterActivity"
             android:label="Новости" >
             <intent-filter>
                 <action android:name=".NewsActivity" />
@@ -46,6 +57,7 @@
         </activity>
         <activity
             android:name="ru.vorobjev.rbcnews.activities.PreferencesActivity"
+            android:parentActivityName="ru.vorobjev.rbcnews.activities.WebsterActivity"
             android:label="Настройки" >
             <action android:name=".PreferencesActivity" />
 
